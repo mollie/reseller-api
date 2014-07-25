@@ -4,7 +4,7 @@
 
 De [Reseller API](https://www.mollie.nl/beheer/reseller/documentatie) kan gebruikt worden om nieuwe klanten aan te melden bij Mollie, om bestaande klanten aan uw reseller-account te koppelen en om instellingen van de door u aangebrachte klanten te wijzigen.
 
-De Reseller API maakt gebruik van [geheime sleutels en signatures](https://www.mollie.nl/beheer/apisleutels/documentatie) voor authenticatie en beveiliging, anders dan bij de nieuwe [Mollie API](https://www.mollie.nl/developers/). Komend jaar zullen we de nieuwe Mollie API uitbreiden met dezelfde functionaliteit. In de tussentijd wordt u geadviseerd deze Reseller API gebruiken en krijgt u daar uiteraard volledige ondersteuning bij.
+De Reseller API maakt gebruik van [geheime sleutels en signatures](https://www.mollie.nl/beheer/apisleutels/documentatie) voor authenticatie en beveiliging, anders dan bij de nieuwe [Mollie API](https://www.mollie.nl/developers/). Komend jaar zullen we de nieuwe Mollie API uitbreiden met reseller-functies, maar in de tussentijd wordt u geadviseerd deze Reseller API gebruiken en krijgt u daar uiteraard volledige ondersteuning bij.
 
 ### License 
 [BSD (Berkeley Software Distribution) License](http://www.opensource.org/licenses/bsd-license.php).
