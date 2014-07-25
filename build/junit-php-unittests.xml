@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Unit Tests" tests="23" assertions="159" failures="0" errors="0" time="0.018611">
+    <testsuite name="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" fullPackage="Mollie" category="Mollie" tests="13" assertions="27" failures="0" errors="0" time="0.012660">
+      <testcase name="testClassIsAbstract" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="55" assertions="1" time="0.001562"/>
+      <testcase name="testConstructorStoresParametersAndLambdafiesSecret" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="61" assertions="4" time="0.000597"/>
+      <testcase name="testGetRequestLogReturnsEmptyArray" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="74" assertions="1" time="0.000211"/>
+      <testcase name="testSetAndGetRequestLogReturnsMessageWithCode" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="79" assertions="1" time="0.000238"/>
+      <testcase name="testErrorReponseUnderstoodCorrectly" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="100" assertions="4" time="0.006212"/>
+      <testcase name="testCurlErrorConvertedToException" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="129" assertions="4" time="0.000647"/>
+      <testcase name="testSignRequestReturnsNull" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="149" assertions="1" time="0.000402"/>
+      <testcase name="testSignRequestAddsTimestampAndSignature" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="155" assertions="2" time="0.000237"/>
+      <testcase name="testConvertResultToObjectReturnsNull" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="164" assertions="1" time="0.000193"/>
+      <testcase name="testConvertResultToObjectReturnsXml" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="169" assertions="2" time="0.000428"/>
+      <testcase name="testConvertResultToObjectReturnsRawBody" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="177" assertions="2" time="0.000658"/>
+      <testcase name="testPerformRequestReturnsObject" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="185" assertions="2" time="0.000682"/>
+      <testcase name="testPerformRequestReturnsBody" class="Mollie_APITest" file="/var/www/reseller-api/php/tests/mollie/apiTest.php" line="211" assertions="2" time="0.000593"/>
+    </testsuite>
+    <testsuite name="Mollie_ResellerTest" file="/var/www/reseller-api/php/tests/mollie/resellerTest.php" fullPackage="Mollie" category="Mollie" tests="10" assertions="132" failures="0" errors="0" time="0.005951">
+      <testsuite name="Mollie_ResellerTest::testApiCalls" tests="10" assertions="132" failures="0" errors="0" time="0.005951">
+        <testcase name="testApiCalls with data set #0" assertions="12" time="0.001835"/>
+        <testcase name="testApiCalls with data set #1" assertions="12" time="0.000447"/>
+        <testcase name="testApiCalls with data set #2" assertions="12" time="0.000445"/>
+        <testcase name="testApiCalls with data set #3" assertions="14" time="0.000398"/>
+        <testcase name="testApiCalls with data set #4" assertions="12" time="0.000417"/>
+        <testcase name="testApiCalls with data set #5" assertions="20" time="0.000497"/>
+        <testcase name="testApiCalls with data set #6" assertions="12" time="0.000433"/>
+        <testcase name="testApiCalls with data set #7" assertions="16" time="0.000635"/>
+        <testcase name="testApiCalls with data set #8" assertions="12" time="0.000421"/>
+        <testcase name="testApiCalls with data set #9" assertions="10" time="0.000423"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

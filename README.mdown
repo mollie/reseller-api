@@ -1,0 +1,25 @@
+![Mollie](https://www.mollie.nl/files/Mollie-Logo-Style-Small.png) 
+
+# Reseller API
+
+De [Reseller API](https://www.mollie.nl/beheer/reseller/documentatie) kan gebruikt worden om nieuwe klanten aan te melden bij Mollie, om bestaande klanten aan uw reseller-account te koppelen en om instellingen van de door u aangebrachte klanten te wijzigen.
+
+De Reseller API maakt gebruik van [geheime sleutels en signatures](https://www.mollie.nl/beheer/apisleutels/documentatie) voor authenticatie en beveiliging, anders dan bij de nieuwe [Mollie API](https://www.mollie.nl/developers/). Komend jaar zullen we de nieuwe Mollie API uitbreiden met dezelfde functionaliteit. In de tussentijd wordt u geadviseerd deze Reseller API gebruiken en krijgt u daar uiteraard volledige ondersteuning bij.
+
+### License 
+[BSD (Berkeley Software Distribution) License](http://www.opensource.org/licenses/bsd-license.php).
+Copyright (c) 2014, Mollie B.V.
+
+### Support
+Contact: [www.mollie.nl](https://www.mollie.nl) — info@mollie.nl — +31 20-612 88 55
+
++ [Meer informatie over iDEAL via Mollie](https://www.mollie.nl/betaaldiensten/ideal/)
++ [Meer informatie over credit card via Mollie](https://www.mollie.nl/betaaldiensten/creditcard/)
++ [Meer informatie over Mister Cash / Bancontact via Mollie](https://www.mollie.nl/betaaldiensten/mistercash/)
++ [Meer informatie over SOFORT Banking via Mollie](https://www.mollie.nl/betaaldiensten/sofort/)
++ [Meer informatie over SEPA Bank transfer via Mollie](https://www.mollie.nl/betaaldiensten/overboeking/)
++ [Meer informatie over Bitcoin via Mollie](https://www.mollie.nl/betaaldiensten/bitcoin/)
++ [Meer informatie over PayPal via Mollie](https://www.mollie.nl/betaaldiensten/paypal/)
++ [Meer informatie over paysafecard via Mollie](https://www.mollie.nl/betaaldiensten/paysafecard/)
+
+![Powered By Mollie](https://www.mollie.nl/images/badge-betaling-medium.png)
