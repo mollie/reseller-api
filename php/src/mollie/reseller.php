@@ -118,9 +118,11 @@ class Mollie_Reseller extends Mollie_API
 	 * @param string $website
 	 * @param string $email
 	 * @param string $phone
+	 * @param int $sector
+	 *
 	 * @return SimpleXMLElement
 	 */
-	public function profileCreate ($username, $password, $name, $website, $email, $phone)
+	public function profileCreate ($username, $password, $name, $website, $email, $phone, $sector)
 	{
 		return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/profile-create', self::API_VERSION), get_defined_vars());
 	}
