@@ -86,7 +86,7 @@ class Mollie_ResellerTest extends PHPUnit_Framework_Testcase
 				'website'  => 'petershop',
 				'email'    => 'peter@email',
 				'phone'    => '02468',
-				'sector'   => '6',
+				'category' => '5399',
 			)),
 			array('bankaccounts', array(
 				'username' => 'john',
