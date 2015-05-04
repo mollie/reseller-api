@@ -25,9 +25,9 @@
  * DAMAGE. 
  *
  * @license     Berkeley Software Distribution License (BSD-License 2) http://www.opensource.org/licenses/bsd-license.php
- * @author      Mollie B.V. <info@mollie.nl>
+ * @author      Mollie B.V. <info@mollie.com>
  * @copyright   Copyright © 2012 Mollie B.V.
- * @link        https://www.mollie.nl
+ * @link        https://www.mollie.com
  * @category    Mollie
  * @version     1.5
  *
