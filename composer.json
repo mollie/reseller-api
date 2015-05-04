@@ -1,6 +1,6 @@
 {
     "name": "mollie/reseller-api",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "description": "Mollie Reseller API",
     "homepage": "https://github.com/mollie/reseller-api",
     "license": "BSD-2-Clause",

@@ -29,7 +29,7 @@
  * @copyright   Copyright © 2012 Mollie B.V.
  * @link        https://www.mollie.com
  * @category    Mollie
- * @version     1.5
+ * @version     1.6
  */
 
 date_default_timezone_set("CET");

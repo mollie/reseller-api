@@ -29,7 +29,7 @@
  * @copyright   Copyright © 2012 Mollie B.V.
  * @link        https://www.mollie.com
  * @category    Mollie
- * @version     1.5
+ * @version     1.6
  *
  * A response created by the Mollie API. This extends SimpleXMLElement and contains some tags that are present in all
  * Mollie API responses.
