@@ -13,13 +13,4 @@ Copyright (c) 2014, Mollie B.V.
 ### Support
 Contact: [www.mollie.com](https://www.mollie.com) — info@mollie.com — +31 20-612 88 55
 
-+ [Meer informatie over iDEAL via Mollie](https://www.mollie.com/ideal/)
-+ [Meer informatie over credit card via Mollie](https://www.mollie.com/creditcard/)
-+ [Meer informatie over Mister Cash / Bancontact via Mollie](https://www.mollie.com/mistercash/)
-+ [Meer informatie over SOFORT Banking via Mollie](https://www.mollie.com/sofort/)
-+ [Meer informatie over SEPA Bank transfer via Mollie](https://www.mollie.com/overboeking/)
-+ [Meer informatie over Bitcoin via Mollie](https://www.mollie.com/bitcoin/)
-+ [Meer informatie over PayPal via Mollie](https://www.mollie.com/paypal/)
-+ [Meer informatie over paysafecard via Mollie](https://www.mollie.com/paysafecard/)
-
 ![Powered By Mollie](https://www.mollie.com/images/badge-betaling-medium.png)
