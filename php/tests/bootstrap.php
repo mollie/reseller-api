@@ -33,10 +33,6 @@
  */
 
 date_default_timezone_set("CET");
-error_reporting(E_ALL ^ E_STRICT);
-
-require_once dirname(__FILE__).'/../src/mollie/autoloader.php';
-Mollie_Autoloader::register();
 
 // Some tests rely on deprecated calltime pass-by-reference.
 error_reporting(-1 & ~(E_DEPRECATED));

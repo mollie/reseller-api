@@ -32,7 +32,8 @@
  * @version     1.6
  *
  * Autoloader for Mollie classes.
- * 
+ *
+ * @deprecated 
  * @codeCoverageIgnore
  */
 final class Mollie_Autoloader

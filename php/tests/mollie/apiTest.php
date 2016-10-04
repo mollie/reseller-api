@@ -36,7 +36,7 @@
  * @covers Mollie_Response
  * @group apiclients
  */
-class Mollie_APITest extends PHPUnit_Framework_Testcase
+class Mollie_APITest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var Mollie_Dummy_API|PHPUnit_Framework_MockObject_MockObject
