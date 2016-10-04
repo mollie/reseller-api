@@ -20,8 +20,8 @@
         ]
     },
     "require": {
-        "ext-curl": "^0.0.0",
-        "ext-openssl": "^0.0.0",
-        "ext-xml": "^0.0.0"
+        "ext-curl": "*",
+        "ext-openssl": "*",
+        "ext-xml": "*"
     }
 }

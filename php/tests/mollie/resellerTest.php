@@ -34,7 +34,7 @@
  * @covers Mollie_Reseller
  * @group apiclients
  */
-class Mollie_ResellerTest extends PHPUnit_Framework_Testcase
+class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var Mollie_Reseller|PHPUnit_Framework_MockObject_MockObject
