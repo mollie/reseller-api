@@ -102,6 +102,16 @@ class Mollie_Reseller extends Mollie_API
     }
 
     /**
+     * @param string $partner_id_customer
+     *
+     * @return SimpleXMLElement
+     */
+    public function bankAccountsByPartnerId($partner_id_customer)
+    {
+        return $this->_performRequest(self::METHOD_POST, sprintf('/api/reseller/v%d/bankaccounts', self::API_VERSION), get_defined_vars());
+    }
+
+    /**
      * @param string $username
      * @param string $password
      * @param string $id
