@@ -136,6 +136,16 @@ class Mollie_Reseller extends Mollie_API
     }
 
     /**
+     * @param string $partner_id_customer
+     *
+     * @return SimpleXMLElement
+     */
+    public function profilesByPartnerId($partner_id_customer)
+    {
+        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/profiles', self::API_VERSION), get_defined_vars());
+    }
+
+    /**
      * @param string $username
      * @param string $password
      * @param string $name
