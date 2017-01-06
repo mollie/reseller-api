@@ -91,6 +91,17 @@ class Mollie_Reseller extends Mollie_API
     }
 
     /**
+     * @param string $partner_id_customer
+     * @param array  $fields
+     *
+     * @return SimpleXMLElement
+     */
+    public function accountEditByPartnerId($partner_id_customer, array $fields)
+    {
+        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/account-edit', self::API_VERSION), array("partner_id_customer" => $partner_id_customer) + $fields);
+    }
+
+    /**
      * @param string $username
      * @param string $password
      *
