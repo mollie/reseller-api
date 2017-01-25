@@ -10,8 +10,13 @@ php:
 
 sudo: false
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 install:
 - travis_retry composer install --no-interaction
 
 script:
+- composer validate --strict
 - vendor/bin/phpunit
