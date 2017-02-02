@@ -62,22 +62,42 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 				'username' => 'john',
 				'password' => '123456',
 			)),
-			array('accountCreate', array(
-				'username' => 'john', 
-				'fields'   => array('address' => '123 Fake Street'),
-			)),
 			array('accountValid', array(
 				'username' => 'john',
 				'password' => '123456',
+			)),
+			array('accountCreate', array(
+				'username' => 'john', 
+				'fields'   => array('address' => '123 Fake Street'),
 			)),
 			array('accountEdit', array(
 				'username' => 'john',
 				'password' => '123456',
 				'fields'   => array('address' => '123 Fake Street'),
 			)),
+			array('accountEditByPartnerId', array(
+				'partner_id_customer' => '555',
+				'fields'              => array('address' => '123 Fake Street'),
+			)),
+			array('bankaccounts', array(
+				'username' => 'john',
+				'password' => '123456',
+			)),
+			array('bankaccountsByPartnerId', array(
+				'partner_id_customer' => '555',
+			)),
+			array('bankaccountEdit', array(
+				'username' => 'john',
+				'password' => '123456',
+				'id'       => '123',
+				'fields'   => array('account_number' => '123456789'),
+			)),
 			array('profiles', array(
 				'username' => 'john',
 				'password' => '123456',
+			)),
+			array('profilesByPartnerId', array(
+				'partner_id_customer' => '555',
 			)),
 			array('profileCreate', array(
 				'username' => 'john',
@@ -88,15 +108,13 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 				'phone'    => '02468',
 				'category' => '5399',
 			)),
-			array('bankaccounts', array(
-				'username' => 'john',
-				'password' => '123456',
-			)),
-			array('bankaccountEdit', array(
-				'username' => 'john',
-				'password' => '123456',
-				'id'       => '123',
-				'fields'   => array('account_number' => '123456789'),
+			array('profileCreateByPartnerId', array(
+				'partner_id_customer' => '555',
+				'name'                => 'peter',
+				'website'             => 'petershop',
+				'email'               => 'peter@email',
+				'phone'               => '02468',
+				'category'            => '5399',
 			)),
 			array('availablePaymentMethods', array(
 				'username' => 'john',
@@ -113,7 +131,27 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testApiCalls ($method, array $params)
 	{
-		$expected_path = "/api/reseller/v".self::API_VERSION.'/'.$this->camel2dashed($method == "availablePaymentMethodsByPartnerId" ? "availablePaymentMethods" : $method);
+		switch ($method) {
+			case 'accountEditByPartnerId':
+				$actual_method = 'accountEdit';
+				break;
+			case 'bankaccountsByPartnerId':
+				$actual_method = 'bankaccounts';
+				break;
+			case 'profilesByPartnerId':
+				$actual_method = 'profiles';
+				break;
+			case 'profileCreateByPartnerId':
+				$actual_method = 'profileCreate';
+				break;
+			case 'availablePaymentMethodsByPartnerId':
+				$actual_method = 'availablePaymentMethods';
+				break;
+			default:
+				$actual_method = $method;
+		}
+
+		$expected_path = "/api/reseller/v".self::API_VERSION.'/'.$this->camel2dashed($actual_method);
 		$expected_params = $params + (isset($params['fields']) ? $params['fields'] : array());
 		unset($expected_params["fields"]);
 
