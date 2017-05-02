@@ -16,5 +16,3 @@ Copyright (c) 2014, Mollie B.V.
 
 ### Support
 Contact: [www.mollie.com](https://www.mollie.com) — info@mollie.com — +31 20-612 88 55
-
-![Powered By Mollie](https://www.mollie.com/images/badge-betaling-medium.png)
