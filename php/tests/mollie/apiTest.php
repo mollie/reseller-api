@@ -141,9 +141,9 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 			$this->arrayHasKey("timestamp"),
 			$this->arrayHasKey("signature")
 		))->will($this->returnValue([
-			'body' => FALSE,
+			'body' => false,
 			'http_code' => 100,
-			'content_type' => FALSE,
+			'content_type' => false,
   			'code' =>  CURLE_OPERATION_TIMEOUTED,
   			'message' => "Operation timed out after 4001 milliseconds with 0 bytes received",
 		]));
@@ -239,11 +239,11 @@ class Mollie_Dummy_API extends Mollie_API
 	public function __call ($method, array $args)
 	{
 		$method = new ReflectionMethod($this, $method);
-		$method->setAccessible(TRUE);
+		$method->setAccessible(true);
 		return $method->invokeArgs($this, $args);
 	}
 
-	public function signRequest ($path, array $params, $secret, $timestamp = NULL)
+	public function signRequest ($path, array $params, $secret, $timestamp = null)
 	{
 		return parent::signRequest($path, $params, $secret, $timestamp);
 	}

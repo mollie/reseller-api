@@ -186,7 +186,7 @@ abstract class Mollie_API
      *
      * @return array
 	 */
-	protected function signRequest($path, array $params, $secret, $timestamp = NULL)
+	protected function signRequest($path, array $params, $secret, $timestamp = null)
 	{
         /* If there is no secret, don't sign the request. */
         if (empty($secret)) {
@@ -195,7 +195,7 @@ abstract class Mollie_API
 
         /* Remove any existing signature, update timestamp and alphabetically sort parameters. */
         unset($params['signature']);
-        $params['timestamp'] = $timestamp !== NULL ? $timestamp : time();
+        $params['timestamp'] = $timestamp !== null ? $timestamp : time();
         ksort($params);
 
         /* Calculate signature */
@@ -235,9 +235,9 @@ abstract class Mollie_API
 	{
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, self::STRICT_SSL);
 		curl_setopt($ch, CURLOPT_ENCODING, ''); // Signal that we support gzip
@@ -248,7 +248,7 @@ abstract class Mollie_API
 			curl_setopt($ch, CURLOPT_URL, $api_endpoint.'?'.http_build_query($params, '', '&'));
 		} else {
 			curl_setopt($ch, CURLOPT_URL, $api_endpoint);
-			curl_setopt($ch, CURLOPT_POST, TRUE);
+			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		}
 
@@ -264,12 +264,12 @@ abstract class Mollie_API
 			$body = curl_exec($ch);
 		}
 
-		if (strpos(curl_error($ch), "certificate subject name 'mollie.nl' does not match target host") !== FALSE) {
+		if (strpos(curl_error($ch), "certificate subject name 'mollie.nl' does not match target host") !== false) {
 			/*
 			 * On some servers, the wildcard SSL certificate is not processed correctly. This happens with OpenSSL 0.9.7
 			 * from 2003.
 			 */
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 			$body = curl_exec($ch);
 		}
 
