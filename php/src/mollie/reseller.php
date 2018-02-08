@@ -49,33 +49,48 @@ class Mollie_Reseller extends Mollie_API
      * @param string $username
      * @param string $password
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function accountClaim($username, $password)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/account-claim', self::API_VERSION), get_defined_vars());
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/account-claim', self::API_VERSION),
+            ["username" => $username, "password" => $password]
+        );
     }
 
     /**
      * @param string $username
      * @param string $password
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function accountValid($username, $password)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/account-valid', self::API_VERSION), get_defined_vars());
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/account-valid', self::API_VERSION),
+            ["username" => $username, "password" => $password]
+        );
     }
 
     /**
      * @param string $username
      * @param array  $fields
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function accountCreate($username, array $fields)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/account-create', self::API_VERSION), array("username" => $username) + $fields);
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/account-create', self::API_VERSION),
+            ["username" => $username] + $fields
+        );
     }
 
     /**
@@ -83,43 +98,63 @@ class Mollie_Reseller extends Mollie_API
      * @param string $password
      * @param array  $fields
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function accountEdit($username, $password, array $fields)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/account-edit', self::API_VERSION), array("username" => $username, "password" => $password) + $fields);
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/account-edit', self::API_VERSION),
+            ["username" => $username, "password" => $password] + $fields
+        );
     }
 
     /**
      * @param string $partner_id_customer
      * @param array  $fields
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function accountEditByPartnerId($partner_id_customer, array $fields)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/account-edit', self::API_VERSION), array("partner_id_customer" => $partner_id_customer) + $fields);
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/account-edit', self::API_VERSION),
+            ["partner_id_customer" => $partner_id_customer] + $fields
+        );
     }
 
     /**
      * @param string $username
      * @param string $password
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function bankAccounts($username, $password)
     {
-        return $this->_performRequest(self::METHOD_POST, sprintf('/api/reseller/v%d/bankaccounts', self::API_VERSION), get_defined_vars());
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/bankaccounts', self::API_VERSION),
+            ["username" => $username, "password" => $password]
+        );
     }
 
     /**
      * @param string $partner_id_customer
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function bankAccountsByPartnerId($partner_id_customer)
     {
-        return $this->_performRequest(self::METHOD_POST, sprintf('/api/reseller/v%d/bankaccounts', self::API_VERSION), get_defined_vars());
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/bankaccounts', self::API_VERSION),
+            ["partner_id_customer" => $partner_id_customer]
+        );
     }
 
     /**
@@ -128,32 +163,47 @@ class Mollie_Reseller extends Mollie_API
      * @param string $id
      * @param array  $fields
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function bankAccountEdit($username, $password, $id, array $fields)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/bankaccount-edit', self::API_VERSION), array("username" => $username, "password" => $password, "id" => $id) + $fields);
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/bankaccount-edit', self::API_VERSION),
+            ["username" => $username, "password" => $password, "id" => $id] + $fields
+        );
     }
 
     /**
      * @param string $username
      * @param string $password
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function profiles($username, $password)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/profiles', self::API_VERSION), get_defined_vars());
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/profiles', self::API_VERSION),
+            ["username" => $username, "password" => $password]
+        );
     }
 
     /**
      * @param string $partner_id_customer
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function profilesByPartnerId($partner_id_customer)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/profiles', self::API_VERSION), get_defined_vars());
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/profiles',self::API_VERSION),
+            ["partner_id_customer" => $partner_id_customer]
+        );
     }
 
     /**
@@ -165,11 +215,26 @@ class Mollie_Reseller extends Mollie_API
      * @param string $phone
      * @param int    $category
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function profileCreate($username, $password, $name, $website, $email, $phone, $category)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/profile-create', self::API_VERSION), get_defined_vars());
+        $params = [
+            "username" => $username,
+            "password" => $password,
+            "name"     => $name,
+            "website"  => $website,
+            "email"    => $email,
+            "phone"    => $phone,
+            "category" => $category
+        ];
+
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/profile-create', self::API_VERSION),
+            $params
+        );
     }
 
     /**
@@ -180,31 +245,55 @@ class Mollie_Reseller extends Mollie_API
      * @param string $phone
      * @param int    $category
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function profileCreateByPartnerId($partner_id_customer, $name, $website, $email, $phone, $category)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/profile-create', self::API_VERSION), get_defined_vars());
+        $params = [
+            "partner_id_customer" => $partner_id_customer,
+            "name"                => $name,
+            "website"             => $website,
+            "email"               => $email,
+            "phone"               => $phone,
+            "category"            => $category
+        ];
+
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/profile-create', self::API_VERSION),
+            $params
+        );
     }
 
     /**
      * @param string $username
      * @param string $password
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function availablePaymentMethods($username, $password)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/available-payment-methods', self::API_VERSION), get_defined_vars());
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/available-payment-methods', self::API_VERSION),
+            ["username" => $username, "password" => $password]
+        );
     }
 
     /**
      * @param string $partner_id_customer
      *
+     * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
     public function availablePaymentMethodsByPartnerId($partner_id_customer)
     {
-        return $this->_performRequest(self::METHOD_POST,  sprintf('/api/reseller/v%d/available-payment-methods', self::API_VERSION), get_defined_vars());
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/available-payment-methods', self::API_VERSION),
+            ["partner_id_customer" => $partner_id_customer]
+        );
     }
 }
