@@ -39,14 +39,17 @@ abstract class Mollie_API
 	 * @var string
 	 */
 	const API_BASE_URL = 'https://secure.mollie.nl';
+
 	/**
 	 * @var bool
 	 */
 	const STRICT_SSL = TRUE;
+
 	/**
 	 * @var string
 	 */
 	const METHOD_GET = 'GET';
+
 	/**
 	 * @var string
 	 */
@@ -58,12 +61,14 @@ abstract class Mollie_API
 	 * @var array
 	 */
 	private $_persistent_params = array();
+
 	/**
 	 * Callable that contains the application secret, because callables cannot be var_dumped.
 	 *
 	 * @var callable
 	 */
 	private $_callableSecret;
+
 	/**
 	 * Request history log.
 	 * 
@@ -93,7 +98,7 @@ abstract class Mollie_API
 		$this->setPersistentParam('profile_key', $profile_key);
 
 		// Make a private secret callable
-		$this->_callableSecret = create_function('', 'return '.var_export($app_secret, TRUE).';');
+        $this->_callableSecret = function() use ($app_secret) { return $app_secret; };
 	}
 
 	/**
@@ -326,4 +331,12 @@ abstract class Mollie_API
 		// Return as string
 		return $body;
 	}
+
+    /**
+     * @throws Mollie_Exception
+     */
+	protected function __sleep()
+    {
+        throw new Mollie_Exception("Due to security considerations, this class cannot be serialized.");
+    }
 }

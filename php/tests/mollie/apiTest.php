@@ -60,14 +60,14 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 
 	public function testConstructorStoresParametersAndLambdafiesSecret ()
 	{
-		$serialized = serialize($this->api);
+	    $this->setExpectedException(Mollie_Exception::class);
+		serialize($this->api);
 
-		$this->assertContains('lambda_', $serialized);
-		$this->assertNotContains(self::APP_SECRET, $serialized);
-		$this->assertNotContains(self::APP_SECRET, var_export($this->api, TRUE));
+        $export = var_export($this->api, true);
+        $this->assertNotContains(self::APP_SECRET, $export);
 
 		$method = new ReflectionMethod($this->api, '_getAppSecret');
-		$method->setAccessible(TRUE);
+		$method->setAccessible(true);
 		$this->assertSame(self::APP_SECRET, $method->invoke($this->api));
 	}
 
