@@ -51,13 +51,11 @@ final class Mollie_Autoloader
 	public static function load ($class_name)
 	{
 		$file_name = str_replace(self::MOLLIE_PREFIX, '', strtolower($class_name), $count);
-
 		if (empty($count)) {
 			return;
 		}
 
-		if (file_exists($file_name = __DIR__ . DIRECTORY_SEPARATOR . "$file_name.php"))
-		{
+		if (file_exists($file_name = __DIR__ . DIRECTORY_SEPARATOR . "$file_name.php")) {
 			require $file_name;
 		}
 	}
@@ -69,7 +67,7 @@ final class Mollie_Autoloader
 	 */
 	public static function register ()
 	{
-		return spl_autoload_register(array(__CLASS__, 'load'));
+		return spl_autoload_register([__CLASS__, 'load']);
 	}
 
 	/**
@@ -79,6 +77,6 @@ final class Mollie_Autoloader
 	 */
 	public static function unregister ()
 	{
-		return spl_autoload_unregister(array(__CLASS__, 'load'));
+		return spl_autoload_unregister([__CLASS__, 'load']);
 	}
 }

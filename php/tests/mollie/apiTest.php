@@ -39,7 +39,7 @@
 class Mollie_APITest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Mollie_Dummy_API|PHPUnit_Framework_MockObject_MockObject
+	 * @var Mollie_Dummy_API|PHPUnit_Framework_MockObject_MockObject|ReflectionClass
 	 */
 	public $api;
 
@@ -49,7 +49,11 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->api = $this->getMock("Mollie_Dummy_API", array("_doRequest"), array(self::PARTNER_ID, self::PROFILE_KEY, self::APP_SECRET));
+		$this->api = $this->getMock(
+		    "Mollie_Dummy_API",
+            ["doRequest"],
+            [self::PARTNER_ID, self::PROFILE_KEY, self::APP_SECRET]
+        );
 	}
 
 	public function testClassIsAbstract ()
@@ -60,34 +64,34 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 
 	public function testConstructorStoresParametersAndLambdafiesSecret ()
 	{
-		$serialized = serialize($this->api);
+	    $this->setExpectedException(Mollie_Exception::class);
+		serialize($this->api);
 
-		$this->assertContains('lambda_', $serialized);
-		$this->assertNotContains(self::APP_SECRET, $serialized);
-		$this->assertNotContains(self::APP_SECRET, var_export($this->api, TRUE));
+        $export = var_export($this->api, true);
+        $this->assertNotContains(self::APP_SECRET, $export);
 
 		$method = new ReflectionMethod($this->api, '_getAppSecret');
-		$method->setAccessible(TRUE);
+		$method->setAccessible(true);
 		$this->assertSame(self::APP_SECRET, $method->invoke($this->api));
 	}
 
 	public function testGetRequestLogReturnsEmptyArray ()
 	{
-		$this->assertSame(array(), $this->api->getRequestLog());
+		$this->assertSame([], $this->api->getRequestLog());
 	}
 
 	public function testSetAndGetRequestLogReturnsMessageWithCode ()
 	{
-		$this->api->_logRequest('GET', '/xml/hello', array(1), array(2));
+        $this->api->logRequest('GET', '/xml/hello', [1], [2]);
 		$log = $this->api->getRequestLog();
 
 		$this->assertSame(
-			array(
+			[
 				'method' => 'GET',
 				'path'   => '/xml/hello',
-				'params' => array(1),
-				'result' => array(2),
-			), 
+				'params' => [1],
+				'result' => [2],
+			],
 			array_pop($log)
 		);
 	}
@@ -99,7 +103,7 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 	 */
 	public function testErrorReponseUnderstoodCorrectly()
 	{
-		$this->api->expects($this->once())->method("_doRequest")
+		$this->api->expects($this->once())->method("doRequest")
 			->with(Mollie_API::METHOD_POST, "/api/dummy/foo", $this->logicalAnd(
 				$this->arrayHasKey("param1"),
 				$this->arrayHasKey("param2"),
@@ -107,7 +111,7 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 				$this->arrayHasKey("profile_key"),
 				$this->arrayHasKey("timestamp"),
 				$this->arrayHasKey("signature")
-			))->will($this->returnValue(array(
+			))->will($this->returnValue([
 			"body" => '<?xml version="1.0" encoding="UTF-8"?>
 						<response>
 							<success>false</success>
@@ -116,7 +120,7 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 						</response>',
 			"http_code" => 403,
 			"content_type" => 'text/xml; charset=UTF-8'
-		)));
+		]));
 
 		$this->api->foo("bar", "baz");
 	}
@@ -128,7 +132,7 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 	 */
 	public function testCurlErrorConvertedToException()
 	{
-		$this->api->expects($this->once())->method("_doRequest")
+		$this->api->expects($this->once())->method("doRequest")
 			->with(Mollie_API::METHOD_POST, "/api/dummy/foo", $this->logicalAnd(
 			$this->arrayHasKey("param1"),
 			$this->arrayHasKey("param2"),
@@ -136,26 +140,21 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 			$this->arrayHasKey("profile_key"),
 			$this->arrayHasKey("timestamp"),
 			$this->arrayHasKey("signature")
-		))->will($this->returnValue(array(
-			'body' => FALSE,
+		))->will($this->returnValue([
+			'body' => false,
 			'http_code' => 100,
-			'content_type' => FALSE,
+			'content_type' => false,
   			'code' =>  CURLE_OPERATION_TIMEOUTED,
   			'message' => "Operation timed out after 4001 milliseconds with 0 bytes received",
-		)));
+		]));
 
 		$this->api->foo("bar", "baz");
-	}
-	public function testSignRequestReturnsNull ()
-	{
-		$arr = array();
-		$this->assertNull($this->api->_signRequest('', $arr, ''));
 	}
 
 	public function testSignRequestAddsTimestampAndSignature ()
 	{
-		$arr = array();
-		$this->api->_signRequest('', $arr, '*secret*', 1347961550);
+		$arr = [];
+        $arr = $this->api->signRequest('', $arr, '*secret*', 1347961550);
 
 		$this->assertSame(1347961550, $arr['timestamp']);
 		$this->assertSame('d71c94f0c12dfaa02c0c704dfc313f333db7a3ca', $arr['signature']);
@@ -163,12 +162,15 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 
 	public function testConvertResultToObjectReturnsNull ()
 	{
-		$this->assertNull($this->api->_convertResponseBodyToObject('', ''));
+		$this->assertNull($this->api->convertResponseBodyToObject('', ''));
 	}
 
 	public function testConvertResultToObjectReturnsXml ()
 	{
-		$xml = $this->api->_convertResponseBodyToObject('<?xml version="1.0"?><root><xml>XML</xml></root>', 'application/xml');
+		$xml = $this->api->convertResponseBodyToObject(
+		    '<?xml version="1.0"?><root><xml>XML</xml></root>',
+            'application/xml'
+        );
 	
 		$this->assertInstanceOf('SimpleXMLElement', $xml);
 		$this->assertEquals('XML', $xml->xml);
@@ -176,7 +178,7 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 
 	public function testConvertResultToObjectReturnsRawBody ()
 	{
-		$raw = $this->api->_convertResponseBodyToObject('body', 'text/something');
+		$raw = $this->api->convertResponseBodyToObject('body', 'text/something');
 	
 		$this->assertInternalType('string', $raw);
 		$this->assertSame('body', $raw);
@@ -186,7 +188,7 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 	{
 		$this->api->setPersistentParam('test', true);
 		$this->api->expects($this->once())
-			->method('_doRequest')
+			->method('doRequest')
 			->with(Mollie_API::METHOD_GET, '/xml/path', $this->logicalAnd(
 			$this->arrayHasKey("id"),
 			$this->arrayHasKey("test"),
@@ -194,7 +196,7 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 			$this->arrayHasKey("profile_key"),
 			$this->arrayHasKey("timestamp"),
 			$this->arrayHasKey("signature")
-		))->will($this->returnValue(array(
+		))->will($this->returnValue([
 			"body" => '<?xml version="1.0" encoding="UTF-8"?>
 						<response>
 							<success>true</success>
@@ -203,21 +205,27 @@ class Mollie_APITest extends PHPUnit_Framework_TestCase
 						</response>',
 			"http_code" => 200,
 			"content_type" => 'application/xml; charset=UTF-8'
-		)));
+		]));
 
-		$this->assertInstanceOf("Mollie_Response", $this->api->_performRequest(Mollie_API::METHOD_GET, '/xml/path', array('id' => 187337)));
+		$this->assertInstanceOf(
+		    "Mollie_Response",
+            $this->api->performRequest(Mollie_API::METHOD_GET, '/xml/path', ['id' => 187337])
+        );
 	}
 
 	public function testPerformRequestReturnsBody ()
 	{
 		$this->api->expects($this->once())
-			->method('_doRequest')
-			->will($this->returnValue(array(
+			->method('doRequest')
+			->will($this->returnValue([
 			"body" => 'foobar',
 			"http_code" => 200,
 			"content_type" => 'text/plain; charset=UTF-8'
-		)));
-		$this->assertSame('foobar', $this->api->_performRequest(Mollie_API::METHOD_POST, '/xml/path', array()));
+		]));
+		$this->assertSame(
+		    'foobar',
+            $this->api->performRequest(Mollie_API::METHOD_POST, '/xml/path', [])
+        );
 	}
 }
 
@@ -231,17 +239,17 @@ class Mollie_Dummy_API extends Mollie_API
 	public function __call ($method, array $args)
 	{
 		$method = new ReflectionMethod($this, $method);
-		$method->setAccessible(TRUE);
+		$method->setAccessible(true);
 		return $method->invokeArgs($this, $args);
 	}
 
-	public function _signRequest ($path, array &$params, $secret, $timestamp = NULL)
+	public function signRequest ($path, array $params, $secret, $timestamp = null)
 	{
-		return parent::_signRequest($path, $params, $secret, $timestamp);
+		return parent::signRequest($path, $params, $secret, $timestamp);
 	}
 
 	public function foo($param1, $param2)
 	{
-		$this->_performRequest(self::METHOD_POST, "/api/dummy/foo", get_defined_vars());
+		$this->performRequest(self::METHOD_POST, "/api/dummy/foo", get_defined_vars());
 	}
 }

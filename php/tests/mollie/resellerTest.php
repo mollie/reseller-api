@@ -48,7 +48,11 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->api = $this->getMock('Mollie_Reseller', array('_doRequest'), array(self::PARTNER_ID, self::PROFILE_KEY, self::APP_SECRET));
+		$this->api = $this->getMock(
+		    'Mollie_Reseller',
+            ['doRequest'],
+            [self::PARTNER_ID, self::PROFILE_KEY, self::APP_SECRET]
+        );
 	}
 
 	public function camel2dashed ($funcName) {
@@ -57,49 +61,49 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 
 	public function dpApiCalls ()
 	{
-		return array(
-			array('accountClaim', array(
+		return [
+			['accountClaim', [
+			    'username' => 'john',
+				'password' => '123456',
+			]],
+            ['accountValid', [
 				'username' => 'john',
 				'password' => '123456',
-			)),
-			array('accountValid', array(
-				'username' => 'john',
-				'password' => '123456',
-			)),
-			array('accountCreate', array(
+			]],
+            ['accountCreate', [
 				'username' => 'john', 
-				'fields'   => array('address' => '123 Fake Street'),
-			)),
-			array('accountEdit', array(
+				'fields'   => ['address' => '123 Fake Street'],
+			]],
+            ['accountEdit', [
 				'username' => 'john',
 				'password' => '123456',
-				'fields'   => array('address' => '123 Fake Street'),
-			)),
-			array('accountEditByPartnerId', array(
+				'fields'   => ['address' => '123 Fake Street'],
+			]],
+            ['accountEditByPartnerId', [
 				'partner_id_customer' => '555',
-				'fields'              => array('address' => '123 Fake Street'),
-			)),
-			array('bankaccounts', array(
+				'fields'              => ['address' => '123 Fake Street'],
+			]],
+            ['bankaccounts', [
 				'username' => 'john',
 				'password' => '123456',
-			)),
-			array('bankaccountsByPartnerId', array(
+			]],
+            ['bankaccountsByPartnerId', [
 				'partner_id_customer' => '555',
-			)),
-			array('bankaccountEdit', array(
+			]],
+			['bankaccountEdit', [
 				'username' => 'john',
 				'password' => '123456',
 				'id'       => '123',
-				'fields'   => array('account_number' => '123456789'),
-			)),
-			array('profiles', array(
+				'fields'   => ['account_number' => '123456789'],
+			]],
+            ['profiles', [
 				'username' => 'john',
 				'password' => '123456',
-			)),
-			array('profilesByPartnerId', array(
+			]],
+            ['profilesByPartnerId', [
 				'partner_id_customer' => '555',
-			)),
-			array('profileCreate', array(
+			]],
+            ['profileCreate', [
 				'username' => 'john',
 				'password' => '123456',
 				'name'     => 'peter',
@@ -107,23 +111,23 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 				'email'    => 'peter@email',
 				'phone'    => '02468',
 				'category' => '5399',
-			)),
-			array('profileCreateByPartnerId', array(
+			]],
+            ['profileCreateByPartnerId', [
 				'partner_id_customer' => '555',
 				'name'                => 'peter',
 				'website'             => 'petershop',
 				'email'               => 'peter@email',
 				'phone'               => '02468',
 				'category'            => '5399',
-			)),
-			array('availablePaymentMethods', array(
+			]],
+            ['availablePaymentMethods', [
 				'username' => 'john',
 				'password' => '123456',
-			)),
-			array('availablePaymentMethodsByPartnerId', array(
+			]],
+            ['availablePaymentMethodsByPartnerId', [
 				'partner_id_customer' => '555',
-			)),
-		);
+			]],
+		];
 	}
 
 	/**
@@ -152,13 +156,13 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 		}
 
 		$expected_path = "/api/reseller/v".self::API_VERSION.'/'.$this->camel2dashed($actual_method);
-		$expected_params = $params + (isset($params['fields']) ? $params['fields'] : array());
+		$expected_params = $params + (isset($params['fields']) ? $params['fields'] : []);
 		unset($expected_params["fields"]);
 
 		$that = $this;
 
 		$this->api->expects($this->once())
-			->method('_doRequest')
+			->method('doRequest')
 			->will($this->returnCallback(function ($http, $path, $params) use ($expected_params, $expected_path, $that) {
 
 			$that->assertEquals("POST", $http);
@@ -174,7 +178,7 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 			$that->assertEquals(Mollie_ResellerTest::PARTNER_ID, $params["partner_id"]);
 			$that->assertEquals(Mollie_ResellerTest::PROFILE_KEY, $params["profile_key"]);
 
-			return array(
+			return [
 				"body" => "<?xml version=\"1.0\"?>
 								<response>
 								<success>true</success>
@@ -182,9 +186,9 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 								<resultmessage>Test OK!.</resultmessage>
 							</response>",
 				"content_type" => "text/xml",
-			);
+			];
 		}));
 
-		$this->assertInstanceOf("Mollie_Response", call_user_func_array(array($this->api, $method), array_values($params)));
+		$this->assertInstanceOf("Mollie_Response", call_user_func_array([$this->api, $method], array_values($params)));
 	}
 }

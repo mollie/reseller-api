@@ -36,47 +36,47 @@
 abstract class Mollie_API
 {
 	/**
-	 * @var string
-	 */
-	const API_BASE_URL = 'https://secure.mollie.nl';
-	/**
 	 * @var bool
 	 */
-	const STRICT_SSL = TRUE;
+	const STRICT_SSL = true;
+
 	/**
 	 * @var string
 	 */
 	const METHOD_GET = 'GET';
+
 	/**
 	 * @var string
 	 */
 	const METHOD_POST = 'POST';
+
+    /**
+     * The base URL as used by the API client.
+     *
+     * @var string
+     */
+    private $api_base_url = 'https://secure.mollie.nl';
 
 	/**
 	 * Persistent parameters.
 	 *
 	 * @var array
 	 */
-	private $_persistent_params = array();
+	private $persistent_params = [];
+
 	/**
 	 * Callable that contains the application secret, because callables cannot be var_dumped.
 	 *
 	 * @var callable
 	 */
-	private $_callableSecret;
+	private $callableSecret;
+
 	/**
 	 * Request history log.
 	 * 
 	 * @var array
 	 */
-	private $_requestLog = array();
-
-	/**
-	 * The base URL as used by the API client.
-	 *
-	 * @var string
-	 */
-	private $_api_base_url = self::API_BASE_URL;
+	private $requestLog = [];
 
 	/**
 	 * Constructor sets persistent parameters and creates a secret callable.
@@ -86,14 +86,13 @@ abstract class Mollie_API
 	 * @param string $profile_key
 	 * @param string $app_secret
 	 */
-	public function __construct ($partner_id, $profile_key, $app_secret)
+	public function __construct($partner_id, $profile_key, $app_secret)
 	{
-		// Set persistent parameters
 		$this->setPersistentParam('partner_id',  $partner_id);
 		$this->setPersistentParam('profile_key', $profile_key);
 
-		// Make a private secret callable
-		$this->_callableSecret = create_function('', 'return '.var_export($app_secret, TRUE).';');
+		/* Make the private secret available through a closure. */
+        $this->callableSecret = function() use ($app_secret) { return $app_secret; };
 	}
 
 	/**
@@ -103,9 +102,9 @@ abstract class Mollie_API
 	 * @param string $value
 	 * @return string
 	 */
-	final public function setPersistentParam ($name, $value)
+	final public function setPersistentParam($name, $value)
 	{
-		return $this->_persistent_params[$name] = $value;
+		return $this->persistent_params[$name] = $value;
 	}
 
 	/**
@@ -113,9 +112,9 @@ abstract class Mollie_API
 	 * 
 	 * @return array 
 	 */
-	final public function getRequestLog ()
+	final public function getRequestLog()
 	{
-		return $this->_requestLog;
+		return $this->requestLog;
 	}
 
 	/**
@@ -126,10 +125,9 @@ abstract class Mollie_API
 	 * @throws Mollie_Exception
 	 * @return void
 	 */
-	protected function _checkResultErrors (Mollie_Response $object)
+	protected function checkResultErrors(Mollie_Response $object)
 	{
-		if (!$object->isSuccess())
-		{
+		if (!$object->isSuccess()) {
 			throw new Mollie_Exception(strval($object->resultmessage), intval($object->resultcode));
 		}
 	}
@@ -141,41 +139,40 @@ abstract class Mollie_API
 	 * @param string $path
 	 * @param array $params
 	 *
+     * @throws Mollie_Exception
 	 * @return mixed
 	 */
-	protected function _performRequest ($method, $path, array $params)
+	protected function performRequest($method, $path, array $params)
 	{
-		// Combine given parameters with persistent parameters and convert to string values.
-		$params = array_map('strval', $params + $this->_persistent_params);
+		/* Combine given parameters with persistent parameters and convert to string values. */
+		$params = array_map('strval', $params + $this->persistent_params);
 
-		$this->_signRequest($path, $params, $this->_getAppSecret());
-		$result = $this->_doRequest($method, $path, $params);
+		$params = $this->signRequest($path, $params, $this->getAppSecret());
+		$result = $this->doRequest($method, $path, $params);
 
-		$this->_logRequest($method, $path, $params, $result);
+		$this->logRequest($method, $path, $params, $result);
 
-		// See if there were cURL errors
-		if (empty($result["body"]))
-		{
-			throw new Mollie_Exception($result["message"], $result["code"]);
-		}
-		$object = $this->_convertResponseBodyToObject($result['body'], $result['content_type']);
+        /* See if there were cURL errors */
+        if (empty($result["body"])) {
+            throw new Mollie_Exception($result["message"], $result["code"]);
+        }
+        $object = $this->convertResponseBodyToObject($result['body'], $result['content_type']);
 
-		if ($object instanceof Mollie_Response)
-		{
-			$this->_checkResultErrors($object);
-		}
+        if ($object instanceof Mollie_Response) {
+            $this->checkResultErrors($object);
+        }
 
-		return $object;
-	}
+        return $object;
+    }
 
-	/**
-	 * Uses the private secret callable to get the Mollie Application secret.
-	 * 
-	 * @return string
-	 */
-	final private function _getAppSecret ()
+    /**
+     * Uses the private secret callable to get the Mollie Application secret.
+     *
+     * @return string
+     */
+	final private function getAppSecret()
 	{
-		return call_user_func($this->_callableSecret);
+		return call_user_func($this->callableSecret);
 	}
 
 	/**
@@ -183,40 +180,45 @@ abstract class Mollie_API
 	 * Signature will be added to input parameters array.
 	 * 
 	 * @param string $path Current request path without query string
-	 * @param array &$params Parameters to use as HMAC data
+	 * @param array $params Parameters to use as HMAC data
 	 * @param string $secret Secret to use as HMAC key
 	 * @param int $timestamp (Optional) Override timestamp
+     *
+     * @return array
 	 */
-	protected function _signRequest ($path, array &$params, $secret, $timestamp = NULL)
+	protected function signRequest($path, array $params, $secret, $timestamp = null)
 	{
-		// If there is no secret, don't sign request
-		if (empty($secret)) {
-			return;
-		}
+        /* If there is no secret, don't sign the request. */
+        if (empty($secret)) {
+            return $params;
+        }
 
-		// Remove any existing signature
-		unset($params['signature']);
+        /* Remove any existing signature, update timestamp and alphabetically sort parameters. */
+        unset($params['signature']);
+        $params['timestamp'] = $timestamp !== null ? $timestamp : time();
+        ksort($params);
 
-		// Update timestamp 
-		$params['timestamp'] = $timestamp !== NULL ? $timestamp : time();
+        /* Calculate signature */
+        $queryString = http_build_query($params, '', '&');
+        $params['signature'] = hash_hmac(
+            'sha1',
+            '/' . trim($path, '/') . '?' . $queryString,
+            strtoupper($secret)
+        );
 
-		// Sort parameters by keys in alphabetical order
-		ksort($params);
+        return $params;
+    }
 
-		// Calculate signature
-		$params['signature'] = hash_hmac('sha1', '/'.trim($path, '/').'?'.http_build_query($params, '', '&'), strtoupper($secret));
-	}
-
-	/**
-	 * Change the API base URL.
-	 *
-	 * @internal
-	 * @codeCoverageIgnore
-	 * @param $url
-	 */
+    /**
+     * Change the API base URL.
+     *
+     * @internal
+     * @codeCoverageIgnore
+     * @param $url
+     */
 	final public function setApiBaseUrl($url)
 	{
-		$this->_api_base_url = $url;
+		$this->api_base_url = $url;
 	}
 
 	/**
@@ -229,34 +231,31 @@ abstract class Mollie_API
 	 * 
 	 * @codeCoverageIgnore
 	 */
-	protected function _doRequest ($method, $path, array $params)
+	protected function doRequest($method, $path, array $params)
 	{
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, self::STRICT_SSL);
 		curl_setopt($ch, CURLOPT_ENCODING, ''); // Signal that we support gzip
 
-		$api_endpoint = trim($this->_api_base_url, '/').'/'.trim($path, '/');
+		$api_endpoint = trim($this->api_base_url, '/').'/'.trim($path, '/');
 
-		if ($method == self::METHOD_GET)
-		{
+		if ($method == self::METHOD_GET) {
 			curl_setopt($ch, CURLOPT_URL, $api_endpoint.'?'.http_build_query($params, '', '&'));
-		}
-		else
-		{
+		} else {
 			curl_setopt($ch, CURLOPT_URL, $api_endpoint);
-			curl_setopt($ch, CURLOPT_POST, TRUE);
+			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		}
 
 		$body = curl_exec($ch);
 
-		if (curl_errno($ch) == CURLE_SSL_CACERT || curl_errno($ch) == CURLE_SSL_PEER_CERTIFICATE || curl_errno($ch) == 77 /* CURLE_SSL_CACERT_BADFILE (constant not defined in PHP though) */)
-		{
+        /* 77 = CURLE_SSL_CACERT_BADFILE (constant not defined in PHP though). */
+		if (curl_errno($ch) == CURLE_SSL_CACERT || curl_errno($ch) == CURLE_SSL_PEER_CERTIFICATE || curl_errno($ch) == 77) {
 			/*
 			 * On some servers, the list of installed certificates is outdated or not present at all (the ca-bundle.crt
 			 * is not installed). So we tell cURL which certificates we trust. Then we retry the requests.
@@ -265,23 +264,22 @@ abstract class Mollie_API
 			$body = curl_exec($ch);
 		}
 
-		if (strpos(curl_error($ch), "certificate subject name 'mollie.nl' does not match target host") !== FALSE)
-		{
+		if (strpos(curl_error($ch), "certificate subject name 'mollie.nl' does not match target host") !== false) {
 			/*
 			 * On some servers, the wildcard SSL certificate is not processed correctly. This happens with OpenSSL 0.9.7
 			 * from 2003.
 			 */
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 			$body = curl_exec($ch);
 		}
 
-		$results = array(
+		$results = [
 			'body'         => $body,
 			'http_code'    => curl_getinfo($ch, CURLINFO_HTTP_CODE),
 			'content_type' => curl_getinfo($ch, CURLINFO_CONTENT_TYPE),
 			'code'         => curl_errno($ch), 
 			'message'      => curl_error($ch),
-		);
+		];
 
 		curl_close($ch);
 
@@ -296,9 +294,15 @@ abstract class Mollie_API
 	 * @param array $params All used HTTP parameters
 	 * @param mixed $result cURL result
 	 */
-	final private function _logRequest ($method, $path, array $params, $result)
+	final private function logRequest($method, $path, array $params, $result)
 	{
-		$this->_requestLog[gmdate('Y-m-d\TH:i:s\Z ').substr(microtime(),0,5)] = get_defined_vars();
+	    $date = gmdate('Y-m-d\TH:i:s\Z ').substr(microtime(),0,5);
+		$this->requestLog[$date] = [
+		    "method" => $method,
+            "path"   => $path,
+            "params" => $params,
+            "result" => $result
+        ];
 	}
 
 	/**
@@ -308,22 +312,25 @@ abstract class Mollie_API
 	 * @param string $content_type 
 	 * @return mixed
 	 */
-	final private function _convertResponseBodyToObject ($body, $content_type)
+	final private function convertResponseBodyToObject($body, $content_type)
 	{
-		// No body to convert
+		/* No body to convert */
 		if (empty($body)) {
-			return NULL;
+			return null;
 		}
 
-		/*
-		 * Convert to Mollie_Response object.
-		 */
-		if (preg_match('/(application|text)\/xml/i', $content_type))
-		{
+		/*  Convert to Mollie_Response object or return as string. */
+		if (preg_match('/(application|text)\/xml/i', $content_type)) {
 			return simplexml_load_string($body, "Mollie_Response");
 		}
-
-		// Return as string
 		return $body;
 	}
+
+    /**
+     * @throws Mollie_Exception
+     */
+	protected function __sleep()
+    {
+        throw new Mollie_Exception("Due to security considerations, this class cannot be serialized.");
+    }
 }
