@@ -127,6 +127,11 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
             ['availablePaymentMethodsByPartnerId', [
 				'partner_id_customer' => '555',
 			]],
+			['disconnectAccount', [
+				'username' => 'john',
+				'password' => '123456',
+				'partner_id_customer' => '555',
+			]],
 		];
 	}
 
@@ -150,6 +155,9 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 				break;
 			case 'availablePaymentMethodsByPartnerId':
 				$actual_method = 'availablePaymentMethods';
+				break;
+			case 'disconnectAccount':
+				$actual_method = 'disconnect-account';
 				break;
 			default:
 				$actual_method = $method;
