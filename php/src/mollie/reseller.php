@@ -178,6 +178,23 @@ class Mollie_Reseller extends Mollie_API
     /**
      * @param string $username
      * @param string $password
+     * @param string $partner_id_customer
+     *
+     * @throws Mollie_Exception
+     * @return SimpleXMLElement
+     */
+    public function disconnectAccount($username, $password, $partner_id_customer)
+    {
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/disconnect-account', self::API_VERSION),
+            ["username" => $username, "password" => $password, "partner_id_customer" => $partner_id_customer]
+        );
+    }
+
+    /**
+     * @param string $username
+     * @param string $password
      *
      * @throws Mollie_Exception
      * @return SimpleXMLElement
