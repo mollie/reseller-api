@@ -36,7 +36,7 @@
  *
  * Mollie Reseller API.
  *
- * @link https://docs.mollie.com/reference/reseller-api/account-create
+ * @link https://docs.mollie.com/reference/reseller-api/guides/overview
  */
 class Mollie_Reseller extends Mollie_API
 {
