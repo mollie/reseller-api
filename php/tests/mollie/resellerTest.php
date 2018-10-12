@@ -134,7 +134,6 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 			]],
             ['getLoginLink', [
                 'partner_id_customer' => '555',
-                'redirect_url' => 'https://www.mollie.com/dashboard/settings/profiles',
             ]],
 		];
 	}
