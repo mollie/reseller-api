@@ -132,7 +132,7 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 				'password' => '123456',
 				'partner_id_customer' => '555',
 			]],
-            ['getLoginLinkByPartnerId', [
+            ['getLoginLink', [
                 'partner_id_customer' => '555',
                 'redirect_url' => 'https://www.mollie.com/dashboard/settings/profiles',
             ]],
@@ -163,9 +163,6 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 			case 'disconnectAccount':
 				$actual_method = 'disconnect-account';
 				break;
-            case 'getLoginLinkByPartnerId':
-                $actual_method = 'getLoginLink';
-                break;
 			default:
 				$actual_method = $method;
 		}
