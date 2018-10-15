@@ -4,11 +4,11 @@
 
 [![Build Status](https://travis-ci.org/mollie/reseller-api.svg?branch=master)](https://travis-ci.org/mollie/reseller-api)
 
-De [Reseller API](https://docs.mollie.com/reference/reseller-api/guides/overview) kan gebruikt worden om nieuwe klanten aan te melden bij Mollie, om bestaande klanten aan uw reseller-account te koppelen en om instellingen van de door u aangebrachte klanten te wijzigen.
+The [Reseller API](https://docs.mollie.com/reference/reseller-api/guides/overview) can be used to register new customers to Mollie, to link existing customers to your reseller account and to change the settings of the customers you have created.
 
-De Reseller API maakt gebruik van [geheime sleutels en signatures](https://docs.mollie.com/reference/reseller-api/guides/secret-keys) voor authenticatie en beveiliging, anders dan bij de [Mollie API](https://docs.mollie.com). Met de Mollie API kunt u wel gebruik maken van [Mollie Connect](https://docs.mollie.com/reference/oauth2/authorize), waarbij u onder andere de mogelijkheid heeft tot het inzien van facturen en creëren van websiteprofielen voor bestaande klanten.
+The Reseller API uses [secure keys and signatures](https://docs.mollie.com/reference/reseller-api/guides/secret-keys) for authentication and security, unlike the [Mollie API](https://docs.mollie.com). With the Mollie API however, you can use [Mollie Connect](https://docs.mollie.com/reference/oauth2/authorize), with which you have the option to view invoices and create website profiles for existing customers.
 
-Mochten er voor u nog reseller-functies ontbreken in onze [Connect API](https://docs.mollie.com/reference/oauth2/authorize), laat ons het weten! Maar in de tussentijd wordt u geadviseerd deze Reseller API te gebruiken en krijgt u daar uiteraard volledige ondersteuning bij.
+If you are still missing reseller functions in our [Connect API](https://docs.mollie.com/reference/oauth2/authorize), let us know! But in the meantime, you are advised to use this Reseller API and we will of course provide full support.
 
 ### License 
 [BSD (Berkeley Software Distribution) License](http://www.opensource.org/licenses/bsd-license.php).
