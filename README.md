@@ -12,7 +12,7 @@ If you are still missing reseller functions in our [Connect API](https://docs.mo
 
 ### License 
 [BSD (Berkeley Software Distribution) License](http://www.opensource.org/licenses/bsd-license.php).
-Copyright © 2013 - 2018, Mollie B.V.
+Copyright © 2014 - 2018, Mollie B.V.
 
 ### Support
 Contact: [www.mollie.com](https://www.mollie.com) — info@mollie.com — +31 20-612 88 55
