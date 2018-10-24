@@ -313,4 +313,25 @@ class Mollie_Reseller extends Mollie_API
             ["partner_id_customer" => $partner_id_customer]
         );
     }
+
+    /**
+     * @param string $partner_id_customer
+     * @param string $redirect_url
+     *
+     * @throws Mollie_Exception
+     * @return SimpleXMLElement
+     */
+    public function getLoginLink($partner_id_customer, $redirect_url="")
+    {
+        $params = [
+            "partner_id_customer" => $partner_id_customer,
+            "redirect_URL" => $redirect_url
+        ];
+
+        return $this->performRequest(
+            self::METHOD_POST,
+            sprintf('/api/reseller/v%d/get-login-link', self::API_VERSION),
+            $params
+        );
+    }
 }
