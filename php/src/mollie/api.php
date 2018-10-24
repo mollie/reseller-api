@@ -237,7 +237,6 @@ abstract class Mollie_API
 
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, self::STRICT_SSL);
 		curl_setopt($ch, CURLOPT_ENCODING, ''); // Signal that we support gzip
