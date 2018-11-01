@@ -325,7 +325,7 @@ class Mollie_Reseller extends Mollie_API
     {
         $params = [
             "partner_id_customer" => $partner_id_customer,
-            "redirect_URL" => $redirect_url
+            "redirect_url" => $redirect_url
         ];
 
         return $this->performRequest(
