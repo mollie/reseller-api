@@ -49,7 +49,7 @@ $mollie = new Mollie_Reseller($partner_id, $profile_key, $app_secret);
 
 // 4. Call API accountCreate
 try {
-	$simplexml = $mollie->accountCreate('my_customer', ['email' => 'my_customer@my.website.com']);
+	$simplexml = $mollie->accountCreate(['email' => 'my_customer@my.website.com']);
 }
 catch (Mollie_Exception $e)
 {

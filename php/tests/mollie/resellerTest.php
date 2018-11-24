@@ -1,28 +1,28 @@
 <?php
 /**
  * Copyright (c) 2012, Mollie B.V.
- * All rights reserved. 
- * 
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions are met: 
- * 
- * - Redistributions of source code must retain the above copyright notice, 
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * - Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright 
+ * - Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY 
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
- * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY 
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
- * DAMAGE. 
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  *
  * @license     Berkeley Software Distribution License (BSD-License 2) http://www.opensource.org/licenses/bsd-license.php
  * @author      Mollie B.V. <info@mollie.com>
@@ -63,19 +63,18 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 	{
 		return [
 			['accountClaim', [
-			    'username' => 'john',
+			    'username' => 'john@example.com',
 				'password' => '123456',
 			]],
             ['accountValid', [
-				'username' => 'john',
+				'username' => 'john@example.com',
 				'password' => '123456',
 			]],
             ['accountCreate', [
-				'username' => 'john', 
-				'fields'   => ['address' => '123 Fake Street'],
+				'fields'   => ['email' => 'john@example.com', 'address' => '123 Fake Street'],
 			]],
             ['accountEdit', [
-				'username' => 'john',
+				'username' => 'john@example.com',
 				'password' => '123456',
 				'fields'   => ['address' => '123 Fake Street'],
 			]],
@@ -84,27 +83,27 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 				'fields'              => ['address' => '123 Fake Street'],
 			]],
             ['bankaccounts', [
-				'username' => 'john',
+				'username' => 'john@example.com',
 				'password' => '123456',
 			]],
             ['bankaccountsByPartnerId', [
 				'partner_id_customer' => '555',
 			]],
 			['bankaccountEdit', [
-				'username' => 'john',
+				'username' => 'john@example.com',
 				'password' => '123456',
 				'id'       => '123',
 				'fields'   => ['account_number' => '123456789'],
 			]],
             ['profiles', [
-				'username' => 'john',
+				'username' => 'john@example.com',
 				'password' => '123456',
 			]],
             ['profilesByPartnerId', [
 				'partner_id_customer' => '555',
 			]],
             ['profileCreate', [
-				'username' => 'john',
+				'username' => 'john@example.com',
 				'password' => '123456',
 				'name'     => 'peter',
 				'website'  => 'petershop',
@@ -121,14 +120,14 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 				'category'            => '5399',
 			]],
             ['availablePaymentMethods', [
-				'username' => 'john',
+				'username' => 'john@example.com',
 				'password' => '123456',
 			]],
             ['availablePaymentMethodsByPartnerId', [
 				'partner_id_customer' => '555',
 			]],
 			['disconnectAccount', [
-				'username' => 'john',
+				'username' => 'john@example.com',
 				'password' => '123456',
 				'partner_id_customer' => '555',
 			]],

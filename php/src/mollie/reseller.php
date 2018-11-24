@@ -78,18 +78,17 @@ class Mollie_Reseller extends Mollie_API
     }
 
     /**
-     * @param string $username
      * @param array  $fields
      *
      * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
-    public function accountCreate($username, array $fields)
+    public function accountCreate(array $fields)
     {
         return $this->performRequest(
             self::METHOD_POST,
             sprintf('/api/reseller/v%d/account-create', self::API_VERSION),
-            ["username" => $username] + $fields
+            $fields
         );
     }
 
