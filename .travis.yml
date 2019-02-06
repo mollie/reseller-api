@@ -14,7 +14,7 @@ cache:
     - $HOME/.composer/cache
 
 install:
-- travis_retry composer install --no-interaction
+- travis_retry composer install --no-interaction --no-progress
 
 script:
 - composer validate --strict
