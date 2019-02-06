@@ -14,9 +14,9 @@ cache:
     - $HOME/.composer/cache
 
 install:
-- travis_retry composer install --no-interaction --no-progress
+- travis_retry composer install --no-interaction --no-progress --no-suggest
 
 script:
 - composer validate --strict
 - find php/src php/tests -name '*.php '| xargs -n 1 -P4 php -l
-- vendor/bin/phpunit
+- vendor/bin/phpunit --no-coverage
