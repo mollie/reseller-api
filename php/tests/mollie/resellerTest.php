@@ -62,10 +62,6 @@ class Mollie_ResellerTest extends PHPUnit_Framework_TestCase
 	public function dpApiCalls ()
 	{
 		return [
-			['accountClaim', [
-			    'username' => 'john',
-				'password' => '123456',
-			]],
             ['accountValid', [
 				'username' => 'john',
 				'password' => '123456',

@@ -52,22 +52,6 @@ class Mollie_Reseller extends Mollie_API
      * @throws Mollie_Exception
      * @return SimpleXMLElement
      */
-    public function accountClaim($username, $password)
-    {
-        return $this->performRequest(
-            self::METHOD_POST,
-            sprintf('/api/reseller/v%d/account-claim', self::API_VERSION),
-            ["username" => $username, "password" => $password]
-        );
-    }
-
-    /**
-     * @param string $username
-     * @param string $password
-     *
-     * @throws Mollie_Exception
-     * @return SimpleXMLElement
-     */
     public function accountValid($username, $password)
     {
         return $this->performRequest(
