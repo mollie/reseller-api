@@ -170,7 +170,7 @@ abstract class Mollie_API
      *
      * @return string
      */
-	final private function getAppSecret()
+	private function getAppSecret()
 	{
 		return call_user_func($this->callableSecret);
 	}
@@ -293,7 +293,7 @@ abstract class Mollie_API
 	 * @param array $params All used HTTP parameters
 	 * @param mixed $result cURL result
 	 */
-	final private function logRequest($method, $path, array $params, $result)
+	private function logRequest($method, $path, array $params, $result)
 	{
 	    $date = gmdate('Y-m-d\TH:i:s\Z ').substr(microtime(),0,5);
 		$this->requestLog[$date] = [
@@ -311,7 +311,7 @@ abstract class Mollie_API
 	 * @param string $content_type 
 	 * @return mixed
 	 */
-	final private function convertResponseBodyToObject($body, $content_type)
+	private function convertResponseBodyToObject($body, $content_type)
 	{
 		/* No body to convert */
 		if (empty($body)) {
